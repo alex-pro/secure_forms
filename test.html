@@ -12,7 +12,7 @@
      https://secureform.mediprocity.com/perl/member/resources/help.pl/?name=secureform_signatures
       -->
 
-  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="../static/jquery.js"></script>
   <script type="text/javascript">
     function callback(response) {
       window.location = response;
@@ -45,7 +45,7 @@
      for form submissions!
      -->
 
-<form id="secureform" method="POST" enctype="multipart/form-data"
+<form id="secureform" name="secureform" method="POST" enctype="multipart/form-data"
     action="https://secureform.mediprocity.com/perl/post/13854-15720-aewE" onsubmit="return doSubmitForm();">
 
 <table cellpadding=3 cellspacing=2 border=0>
@@ -104,9 +104,8 @@
 <script type="text/javascript">
 new sform.Signature({
         id: 'inksig',
-        form_name: 'myform',
+        form_name: 'secureform',
         field_name: 'signature',
-        caption: 'User Signature',
         w: 350,
         h: 75,
         css: 'signature_area'
