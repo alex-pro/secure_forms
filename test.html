@@ -1,42 +1,52 @@
 <!DOCTYPE HTML>
 <HTML>
+
 <HEAD>
 
-<!-- JavaScript Library for "SecureForm Ink Signatures" (only needed if you are using them) -->
-<!-- Hosted in a CDN for faster download -->
-<script type="text/javascript" src="//d3nojzhs96djbd.cloudfront.net/static/js/ink_signatures_v6.js"></script>
-<!-- Ink Signature Support for IE v6 - v8 -->
-<!--[if IE]><script type="text/javascript" src="//d3nojzhs96djbd.cloudfront.net/static/js/s3/excanvas.compiled.js"></script><![endif]-->
-<!-- To learn more about Ink Signatures, see:
+  <!-- JavaScript Library for "SecureForm Ink Signatures" (only needed if you are using them) -->
+  <!-- Hosted in a CDN for faster download -->
+  <script type="text/javascript" src="//d3nojzhs96djbd.cloudfront.net/static/js/ink_signatures_v6.js"></script>
+  <!-- Ink Signature Support for IE v6 - v8 -->
+  <!--[if IE]><script type="text/javascript" src="//d3nojzhs96djbd.cloudfront.net/static/js/s3/excanvas.compiled.js"></script><![endif]-->
+  <!-- To learn more about Ink Signatures, see:
      https://secureform.mediprocity.com/perl/member/resources/help.pl/?name=secureform_signatures
       -->
-   
 
+  <script type="text/javascript" src="../static/jquery.js"></script>
+  <script type="text/javascript">
+    function callback(response) {
+      window.location = response;
+    }
 
-<!-- Add a few simple CSS styles -->
-<style type=text/css>
+    function doSubmitForm() {
+      var form = $('#secureform');
+      var url = form.attr('action');
+      var resumed = '';
 
-th { text-align: left; border: 1px solid #CCC; }
+      $.ajax({
+             type: "POST",
+             url: url,
+             data: form.serialize() + "&__ajax__submit__=1" + resumed,
+             crossDomain: true,
+             dataType: 'text',
+             success: callback,
+             error: callback
+           });
+      return false;
+    };
+  </script>
+  <!-- Add a few simple CSS styles -->
+  <style type=text/css> th { text-align: left; border: 1px solid #CCC; } .signature_area { border: 1px solid #888; padding: 3px; } </style> </HEAD> <BODY>
 
-.signature_area {
-   border: 1px solid #888;
-   padding: 3px;
-   }
-
-</style>
-
-</HEAD>
-<BODY>
-
-<h1>Example Contact Form</h1>
+    <h1>Example Contact Form</h1>
 
 <!-- Form tag which posts to the SecureForm configuration.  The "enctype"
      setting is used for forms that may upload files. Always use a method of "POST"
      for form submissions!
      -->
 
-<form name="myform" method="POST" enctype="multipart/form-data"
-    action="https://secureform.mediprocity.com/perl/post/13854-15720-aewE"> 
+<form id="secureform" method="POST" enctype="multipart/form-data"
+    action="https://secureform.mediprocity.com/perl/post/13854-15720-aewE" onsubmit="return doSubmitForm();">
 
 <table cellpadding=3 cellspacing=2 border=0>
 
@@ -49,22 +59,22 @@ th { text-align: left; border: 1px solid #CCC; }
   <th>Enter Your Phone Number:</th>
   <td><input type="text" size="20" name="phone"></td>
   </tr>
-   
+
 <tr>
   <th>Enter Your Email Address:</th>
   <td><input type="text" size="20" name="email"></td>
   </tr>
- 
+
 <tr valign="top">
   <th>Your Message:</th>
   <td><textarea name="message" rows="5" cols="40"></textarea></td>
   </tr>
- 
+
 <tr valign="top">
   <th>Upload a File:</th>
   <td><input type="file" name="customer_file"></td>
   </tr>
- 
+
 <tr valign="top">
   <th>Issue Type:</th>
   <td><select name="issue_type">
@@ -73,7 +83,7 @@ th { text-align: left; border: 1px solid #CCC; }
       </option>
    </td>
   </tr>
- 
+
 <tr valign="top">
   <th>Agree to our terms?</th>
   <td><input type="checkbox" name="terms" value="YES">
@@ -82,9 +92,9 @@ th { text-align: left; border: 1px solid #CCC; }
   </tr>
 
 <!-- Optional Ink Signature for signing names and having that signature
-     come through as an image file. 
-     Note: that this feature is not supported in Internet Explorer versions 
-     older than v9.   
+     come through as an image file.
+     Note: that this feature is not supported in Internet Explorer versions
+     older than v9.
      -->
 
 <tr valign="top">
@@ -109,7 +119,7 @@ new sform.Signature({
 
    </td>
   </tr>
-  
+
 <tr><Td><br></td>
    <td> <input type=submit value="Submit Form"> </td>
    </tr>
